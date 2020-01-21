@@ -7,7 +7,7 @@ X = Donnee(1:55, [1:5]);
 Y = Donnee(1:55, 6);
 XTest = Donnee(56:78, [1:5]);
 YTest = Donnee(56:78, 6);
- %on prendre 30% man 3nd  l'apprentissage 
+%Nous prenons 30% de l'apprentissage
 XValidation = Validation(1:17, [1:5]);
 YValidation = Validation(1:17, 6);
 %X = Donnee(1:75, [1:5]);
@@ -50,21 +50,21 @@ vecteur=zeros(NbIteration,labels);
   k =min(vect_cost);
   
   l = ['Cost ',num2str(k),'.'];
-disp(l);
+  disp(l);
  
  
 
 plot(1:NbIteration,vect_cost,'-b'); 
-
+%La precision de l'apprentissage
 Precisionn=Precision(X, Y, all_theta);
 display(['La precision  = ', num2str(Precisionn),' % .']);
 
-
+%La precision de tests
 XTest=[ones(size(XTest,1),1) XTest];
 PrecisionTest=Precision(XTest, YTest, all_theta);
 display(['La precision de tests = ', num2str(PrecisionTest),' % .']);
 
-
+%La precision de validation
 XValidation=[ones(size(XValidation,1),1) XValidation];
 PrecisionValidation=Precision(XValidation, YValidation, all_theta);
 display(['La precision de validation = ', num2str(PrecisionValidation),' % .']);
