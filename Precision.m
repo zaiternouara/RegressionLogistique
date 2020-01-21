@@ -1,8 +1,8 @@
 function preci = Precision(X, Y, Theta)
-    X=[ones(size(X,1),1) X];
+    
    
     z = Theta * X';
-    [proba id] = max(Hypothesis_Sigmoid(z));
+    [proba id] = max(Hypothesis_Sigmoid(z)); %On obtient la probabilité et la prediction qui sont le résultat de l'hypothese la plus elevé
    
     preci = id' ;
     preci = mean(double(Y == preci)*100);

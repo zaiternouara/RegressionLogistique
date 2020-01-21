@@ -5,25 +5,27 @@ clc ;
 Donnee = load('caesarian.txt');
 X = Donnee(:, [1:5]);
 Y = Donnee(:, 6);
-[a,b] = size(X); % a = nombre de lignes de x et b = nombre de colones
-X=[ones(a, 1),X];
+
+m = size(X, 1);
+n = size(X, 2); % m = nombre de lignes de x et n = nombre de colones
+labels = size(unique(Y),1);
+X=[ones(m,1) X];
 
 
 apt = find(Y == 1); %des indexs ou y = 1
 inapt = find(Y == 0); %des indexs ou y = 0 
-theta = zeros(b+1 , 1); % Initialisation de theta par des zeros selon le nombre des features le + 1 est pour theta(0)
+theta = zeros(labels, n + 1); % Initialisation de theta par des zeros selon le nombre des features le + 1 est pour theta(0)
 
 
-alpha = 0.003;
 
 NbIteration = 1000;
 
 lambda = 0.001;
 
-
-[theta ,vect_cost] = GradientDescent(X, Y, theta, alpha, NbIteration,lambda);
+vecteur=zeros(NbIteration,labels);
+[theta ,vecteur_cost] = EquationNormale(X,Y,lambda,n,NbIteration);
 display(theta);
-display(vect_cost);
+display(vecteur_cost);
 
 
 

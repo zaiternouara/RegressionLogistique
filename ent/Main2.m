@@ -7,7 +7,7 @@ Y = Donnee(1:55, 6);
 XTest = Donnee(56:78, [1:5]);
 YTest = Donnee(56:78, 6);
 
- XValidation = Validation(1:17, [1:5]);
+XValidation = Validation(1:17, [1:5]);
 YValidation = Validation(1:17, 6);
 % n =Taille de tuples x et m = Nombre de colonnes 
 m = size(X, 1);
@@ -44,10 +44,17 @@ vecteur=zeros(NbIteration,labels);
  display(all_theta);
 plot(1:NbIteration,vect_cost,'-b');  
 
+Precisionn=Precision(X, Y, all_theta);
+display(['La precision  = ', num2str(Precisionn),' %']);
+
+
+XTest=[ones(size(XTest,1),1) XTest];
 PrecisionTest=Precision(XTest, YTest, all_theta);
-PrecisionValidation=Precision(XValidation, YValidation, all_theta);
 display(['La precision de tests = ', num2str(PrecisionTest),' %']);
 
+
+XValidation=[ones(size(XValidation,1),1) XValidation];
+PrecisionValidation=Precision(XValidation, YValidation, all_theta);
 display(['La precision de Validation = ', num2str(PrecisionValidation),' %']);
 
 

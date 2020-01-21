@@ -24,9 +24,9 @@ all_theta = zeros(labels, n + 1);
 
 
 
-alpha = 0.010;
+alpha = 0.01;
 
-NbIteration = 1000;
+NbIteration = 500;
 
 lambda = 0.002;
 
@@ -47,18 +47,26 @@ vecteur=zeros(NbIteration,labels);
 
   vect_cost = min(vecteur');
   vect_cost(:);
+  k =min(vect_cost);
   
-  
+  l = ['Cost ',num2str(k),'.'];
+disp(l);
  
  
 
 plot(1:NbIteration,vect_cost,'-b'); 
 
+Precisionn=Precision(X, Y, all_theta);
+display(['La precision  = ', num2str(Precisionn),' % .']);
 
+
+XTest=[ones(size(XTest,1),1) XTest];
 PrecisionTest=Precision(XTest, YTest, all_theta);
-PrecisionValidation=Precision(XValidation, YValidation, all_theta);
-display(['La precision de tests = ', num2str(PrecisionTest),' %']);
+display(['La precision de tests = ', num2str(PrecisionTest),' % .']);
 
-display(['La precision de Validation = ', num2str(PrecisionValidation),' %']);
+
+XValidation=[ones(size(XValidation,1),1) XValidation];
+PrecisionValidation=Precision(XValidation, YValidation, all_theta);
+display(['La precision de validation = ', num2str(PrecisionValidation),' % .']);
 
 
