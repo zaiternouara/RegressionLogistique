@@ -1,72 +1,75 @@
 clear ; close all; clc;
 Donnee = load('caesarian.txt');
-Validation =load('Validation.txt');
 
-% 70% Pour l'apprentissage et 30% pour le test
-X = Donnee(1:55, [1:5]);
-Y = Donnee(1:55, 6);
-XTest = Donnee(56:78, [1:5]);
-YTest = Donnee(56:78, 6);
-%Nous prenons 30% de l'apprentissage
-XValidation = Validation(1:17, [1:5]);
-YValidation = Validation(1:17, 6);
-%X = Donnee(1:75, [1:5]);
-%Y = Donnee(1:75, 6);
-%XTest = Donnee(76:108, [1:5]);
-%YTest = Donnee(76:108, 6);
+% 70% Pour l'apprentissage des features
+X = Donnee(1:54, [1:5]);
+Y = Donnee(1:54, 6);
+
+%15% pour le test
+XTest = Donnee(55:66, [1:5]);
+YTest = Donnee(55:66, 6);
+%15% pour la validation
+XValidation = Donnee(67:78, [1:5]);
+YValidation = Donnee(67:78, 6);
+
 
  
-% n =Taille de tuples x et m = Nombre de colonnes 
+% m=Taille de tuples x et n = Nombre de colonnes 
 m = size(X, 1);
 n = size(X, 2);
-labels = size(unique(Y),1);%nombre de classes cad 2
-all_theta = zeros(labels, n + 1);
-
-
 
 alpha = 0.01;
-
-NbIteration = 500;
-
-lambda = 0.002;
-
+NbIteration = 6000;
+lambda = 0.009;
 
 X=[ones(m,1) X];
+u = size(XValidation, 1);
+XValidation=[ones(u,1) XValidation];
+v = size(XTest, 1);
+XTest=[ones(v,1) XTest];
+
 theta_initial = zeros(n+1,1);
-vecteur=zeros(NbIteration,labels);
+vecteur=zeros(NbIteration,1);
+VecteurTest=zeros(NbIteration,1);
+VecteurValidation=zeros(NbIteration,1);
 
-  for c = 1 :labels
-    
-	  [theta ,vecteur(:,c)] = GradientDescent(X, (Y == c), theta_initial, alpha, NbIteration,lambda);
-	  
-    all_theta(c,:) = theta';
-  end
-  
+[theta ,vecteur(:,1) , VecteurTest(:,1) ,VecteurValidation(:,1) ] = GradientDescent(X, Y, theta_initial, alpha, NbIteration,lambda, XTest , YTest , XValidation , YValidation);
+
+
+
   
   
 
-  vect_cost = min(vecteur');
-  vect_cost(:);
-  k =min(vect_cost);
+  k =min(vecteur(end:end));
   
   l = ['Cost ',num2str(k),'.'];
   disp(l);
  
  
 
-plot(1:NbIteration,vect_cost,'-b'); 
+ 
+
+figure('name','Cost function'); % titre de la figure cost Function
+plot(1:NbIteration, vecteur, 'b','LineWidth', 2 ); % plot de cost 
+hold on 
+plot(1:NbIteration, VecteurTest,'r','LineWidth', 2 );
+hold on
+plot(1:NbIteration, VecteurValidation,'g','LineWidth', 2);
+hold on
+title('Cost Fuction'); 
+xlabel('Nombre iteration'); 
+ylabel('Vecteur de cost'); 
+
 %La precision de l'apprentissage
-Precisionn=Precision(X, Y, all_theta);
-display(['La precision  = ', num2str(Precisionn),' % .']);
-
-%La precision de tests
-XTest=[ones(size(XTest,1),1) XTest];
-PrecisionTest=Precision(XTest, YTest, all_theta);
-display(['La precision de tests = ', num2str(PrecisionTest),' % .']);
-
+Precisionn=Precision(X, Y, theta);
+display(['La precision apprentissage= ', num2str(Precisionn),' % .']);
+ 
 %La precision de validation
-XValidation=[ones(size(XValidation,1),1) XValidation];
-PrecisionValidation=Precision(XValidation, YValidation, all_theta);
+
+PrecisionValidation=Precision(XValidation, YValidation, theta);
 display(['La precision de validation = ', num2str(PrecisionValidation),' % .']);
 
+%La precision de tests
+PrecisionTest=Precision(XTest, YTest, theta);
+display(['La precision des tests = ', num2str(PrecisionTest),' % .']);
 

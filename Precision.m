@@ -1,9 +1,13 @@
 function preci = Precision(X, Y, Theta)
     
    
-    z = Theta * X';
-    [proba id] = max(Hypothesis_Sigmoid(z)); %On obtient la probabilité et la prediction qui sont le résultat de l'hypothese la plus elevé
-   
-    preci = id' ;
-    preci = mean(double(Y == preci)*100);
+    z = round(Hypothesis_Sigmoid(X * Theta));
+    
+    right = 0;
+    for i = 1:size(z,1)
+        if(Y(i,1)==z(i,1))
+            right = right +1;
+        end
+    end
+    preci = right / size(Y,1) * 100;
 end
