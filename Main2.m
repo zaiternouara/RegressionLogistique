@@ -49,27 +49,31 @@ VecteurValidation=zeros(NbIteration,1);
 
  
 
-figure('name','Cost function'); % titre de la figure cost Function
+figure('name','les Fonctions de coûts'); % titre de la figure cost Function
 plot(1:NbIteration, vecteur, 'b','LineWidth', 2 ); % plot de cost 
 hold on 
 plot(1:NbIteration, VecteurTest,'r','LineWidth', 2 );
 hold on
 plot(1:NbIteration, VecteurValidation,'g','LineWidth', 2);
 hold on
-title('Cost Fuction'); 
-xlabel('Nombre iteration'); 
-ylabel('Vecteur de cost'); 
+legend('Coût apprentissage','Coût des tests','Coût de validation')
+title('Fonctions des coûts'); 
+xlabel('Nombre des itérations'); 
+ylabel('Vecteur de coût'); 
 
 %La precision de l'apprentissage
 Precisionn=Precision(X, Y, theta);
 display(['La precision apprentissage= ', num2str(Precisionn),' % .']);
  
-%La precision de validation
-
-PrecisionValidation=Precision(XValidation, YValidation, theta);
-display(['La precision de validation = ', num2str(PrecisionValidation),' % .']);
 
 %La precision de tests
 PrecisionTest=Precision(XTest, YTest, theta);
 display(['La precision des tests = ', num2str(PrecisionTest),' % .']);
+
+
+%La precision de validation
+PrecisionValidation=Precision(XValidation, YValidation, theta);
+display(['La precision de validation = ', num2str(PrecisionValidation),' % .']);
+
+
 
