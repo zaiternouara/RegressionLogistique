@@ -1,7 +1,7 @@
 clear ; close all; clc;
 Donnee = load('caesarian.txt');
 
-% 70% Pour l'apprentissage et 30% pour le test
+
 % 70% Pour l'apprentissage des features
 X = Donnee(1:54, [1:5]);
 Y = Donnee(1:54, 6);
@@ -18,7 +18,7 @@ n = size(X, 2);
 
 
 
-lambda = 80;
+lambda = 0.009;
 
 
 X=[ones(m,1) X];
@@ -31,7 +31,16 @@ theta_initial = zeros(n+1,1);
 
   l = ['Cost ',num2str(cost),'.'];
   disp(l);
+figure('name','les Fonction de coût'); % titre de la figure cost Function
+plot(cost, 'r*'); % plot de cost 
 
+legend('Coût apprentissage')
+title('Fonction de coût'); 
+ylabel('Vecteur de coût'); 
+
+  
+  
+  
 Precisionn=PrecisionForNE(X, Y, theta);
 display(['La precision apprentissage  = ', num2str(Precisionn),' %.']);
 
