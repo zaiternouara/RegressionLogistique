@@ -22,6 +22,7 @@ alpha = 0.01;
 NbIteration = 6000;
 lambda = 0.009;
 
+
 X=[ones(m,1) X];
 u = size(XValidation, 1);
 XValidation=[ones(u,1) XValidation];
@@ -56,7 +57,7 @@ plot(1:NbIteration, VecteurTest,'r','LineWidth', 2 );
 hold on
 plot(1:NbIteration, VecteurValidation,'g','LineWidth', 2);
 hold on
-legend('Coût apprentissage','Coût des tests','Coût de validation')
+legend('Coût apprentissage','Coût des tests','Coût de validation');
 title('Fonctions des coûts'); 
 xlabel('Nombre des itérations'); 
 ylabel('Vecteur de coût'); 
